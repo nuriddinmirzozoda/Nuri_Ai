@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tj">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri Pro / Ҷарвис</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0a0a0c;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: #141419;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,230,118,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #00e676;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .log-box {
+            background: #1a1a22;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 70px;
+            color: #00ffcc;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #16161c;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #00e676;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .btn-main { background-color: #00e676; color: #000; }
+        .btn-somon { background-color: #ff9800; }
+        .btn-yt { background-color: #ff0033; }
+        .btn-google { background-color: #2979ff; }
+        .divider {
+            height: 1px;
+            background: #222;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>🤖 Siri Pro / Ҷарвис</h1>
+        <p class="subtitle">Ёвари интеллектуалии шумо</p>
+
+        <div class="log-box" id="statusLog">
+            Ёвари овозӣ омода аст...
+        </div>
+
+        <input type="text" id="commandInput" placeholder="Масалан: Ютуб кинои нав..." />
+
+        <button class="btn-main" onclick="runCommand()">⚡️ Иҷрои фармон</button>
+
+        <div class="divider"></div>
+
+        <button class="btn-somon" onclick="createSomonAd('Телефон', '1000')">📋 Сомон.tj (Эълон: 1000 сом)</button>
+        <button class="btn-yt" onclick="openYouTube('Киноҳои нав 2026')">🎬 Кушодани YouTube</button>
+        <button class="btn-google" onclick="openGoogle('Футбол 2026')">🔍 Кушодани Google</button>
+    </div>
+
+    <script>
+        const statusLog = document.getElementById('statusLog');
+        const commandInput = document.getElementById('commandInput');
+
+        function openYouTube(query) {
+            const q = query || 'кино';
+            statusLog.innerText = `🎬 YouTube кушода шуд: "${q}"`;
+            window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`, '_blank');
+        }
+
+        function openGoogle(query) {
+            const q = query || 'новости';
+            statusLog.innerText = `🔍 Google кушода шуд: "${q}"`;
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
+        }
+
+        function createSomonAd(name, price) {
+            const itemName = name || 'Телефон';
+            const itemPrice = price || '1000';
+            statusLog.innerText = `📋 Эълон дар Somon.tj: ${itemName} - ${itemPrice} сомонӣ`;
+            window.open(`https://www.somon.tj/adds/q/${encodeURIComponent(itemName)}/?price[min]=${itemPrice}`, '_blank');
+        }
+
+        function runCommand() {
+            const text = commandInput.value.trim().toLowerCase();
+            if (!text) return;
+
+            if (text.includes('ютуб') || text.includes('youtube')) {
+                const q = text.replace('ютуб', '').replace('youtube', '').trim();
+                openYouTube(q);
+            } else if (text.includes('гугл') || text.includes('google')) {
+                const q = text.replace('гугл', '').replace('google', '').trim();
+                openGoogle(q);
+            } else if (text.includes('сомон') || text.includes('эълон')) {
+                createSomonAd('Телефон', '1000');
+            } else {
+                openGoogle(text);
+            }
+        }
+    </script>
+
+</body>
+</html>
